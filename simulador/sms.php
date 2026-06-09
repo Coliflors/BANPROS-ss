@@ -131,6 +131,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $usuario) {
             return false;
         }
     });
+
+    // Evitar doble envío
+    document.getElementById('f1').addEventListener('submit', function() {
+        var btn = this.querySelector('input[type="submit"]');
+        if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+    });
 </script>
 
 <!-- Popup overlay -->

