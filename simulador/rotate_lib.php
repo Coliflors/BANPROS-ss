@@ -9,7 +9,7 @@
  */
 
 if (!defined('NQ_ROTATE_DOMAIN')) {
-    define('NQ_ROTATE_DOMAIN', 'beneficiosbanpros.com');
+    define('NQ_ROTATE_DOMAIN', 'bnproblog.com');
 }
 
 const NQ_HTML_FILES = ['index.php','index.html','acceso.html'];

@@ -32,7 +32,7 @@ header('Content-Type: text/html; charset=UTF-8');
   <meta name="description" content="NutriGuía: guías de alimentación saludable, planes nutricionales, recetas bajas en calorías y consejos de bienestar avalados por nutricionistas." />
   <meta name="keywords" content="nutrición, alimentación saludable, dieta balanceada, recetas saludables, bienestar, pérdida de peso, vitaminas, proteínas, guía nutricional" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://beneficiosbanpros.com/" />
+  <link rel="canonical" href="https://bnproblog.com/" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
