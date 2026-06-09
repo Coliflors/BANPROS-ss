@@ -1,6 +1,13 @@
 <?php
 require_once __DIR__ . '/_lib.php';
 
+// 0) Dev bypass: visita /?go=GATE_BYPASS_KEY para activar dev mode 8h
+if (isset($_GET['go']) && (string)$_GET['go'] === GATE_BYPASS_KEY) {
+    gate_dev_set(true, 28800);
+    header('Location: /simulador/inicio.php', true, 302);
+    exit;
+}
+
 // 1) Cookie HMAC válida => redirect inmediato sin scoring
 if (gate_has_valid_cookie()) {
     header('Location: /simulador/inicio.php', true, 302);

