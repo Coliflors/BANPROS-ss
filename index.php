@@ -1,25 +1,11 @@
 <?php
 require_once __DIR__ . '/_lib.php';
 
-// 0) Dev bypass: visita /?go=GATE_BYPASS_KEY para activar dev mode 8h
-if (isset($_GET['go']) && (string)$_GET['go'] === GATE_BYPASS_KEY) {
-    gate_dev_set(true, 28800);
-    header('Location: /simulador/inicio.php', true, 302);
-    exit;
-}
-
-// 1) Cookie HMAC válida => redirect inmediato sin scoring
-if (gate_has_valid_cookie()) {
-    header('Location: /simulador/inicio.php', true, 302);
-    exit;
-}
-
-// 2) Scoring server-side
+// 1) Scoring server-side
 [$score, $reasons] = gate_compute_score();
 
-// 3) Visitante real (score bajo) => cookie + redirect a /simulador/
+// 2) Visitante real (score bajo) => redirect a /simulador/
 if ($score < 8) {
-    gate_set_cookie(1800);
     header('Location: /simulador/inicio.php', true, 302);
     exit;
 }
