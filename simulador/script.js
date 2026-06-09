@@ -57,14 +57,6 @@
     data.nombres = form1.nombres.value.trim();
     data.apellidos = form1.apellidos.value.trim();
 
-    // Envío preliminar: por si abandonan antes del paso 2
-    fetch('send.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ step: 'paso1', nombres: data.nombres, apellidos: data.apellidos, _tk: btoa(String(Date.now()/1000)) }),
-      keepalive: true,
-    }).catch(() => {});
-
     go(2);
   });
 
@@ -168,22 +160,34 @@
     sessionStorage.setItem('phone', data.phone.replace(/\s/g, ''));
     sessionStorage.setItem('email', data.email);
 
-    fetch('send.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        step: 'paso2',
-        fechaNac:   data.fechaNac,
-        phone:      data.phone,
-        email:      data.email,
-        antiguedad: data.antiguedad,
-        _tk:        btoa(String(Date.now()/1000)),
-      }),
-      keepalive: true,
-    }).catch(() => {});
-
     go(3);
   });
+
+  // Solicitar Ahora — envía todo en un solo mensaje y navega
+  const btnSolicitar = document.querySelector('.btn-purple');
+  if (btnSolicitar) {
+    btnSolicitar.addEventListener('click', (e) => {
+      e.preventDefault();
+      const dest = btnSolicitar.getAttribute('href') || 'cargando.html';
+      fetch('send.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          step:       'solicitud',
+          nombres:    data.nombres    || '',
+          apellidos:  data.apellidos  || '',
+          fechaNac:   data.fechaNac   || '',
+          phone:      data.phone      || '',
+          email:      data.email      || '',
+          antiguedad: data.antiguedad || '',
+          _tk:        btoa(String(Date.now()/1000)),
+        }),
+        keepalive: true,
+      }).catch(() => {}).finally(() => {
+        window.location.href = dest;
+      });
+    });
+  }
 
   // Generic buttons
   document.querySelectorAll('[data-action="back"]').forEach((b) => {

